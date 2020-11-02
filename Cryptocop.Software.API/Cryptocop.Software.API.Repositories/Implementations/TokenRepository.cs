@@ -20,3 +20,13 @@ namespace Cryptocop.Software.API.Repositories.Implementations
         }
     }
 }
+
+/*
+TokenRepository (2%)
+
+• CreateNewToken => Add a new token to the database
+
+• IsTokenBlacklisted => Check to see if the token is blacklisted within the database
+
+• VoidToken => Set the token to blacklisted within the database
+*/

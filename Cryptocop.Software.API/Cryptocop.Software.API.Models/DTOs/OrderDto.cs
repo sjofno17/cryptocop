@@ -30,8 +30,7 @@ OrderDto
 • City (string)
 • CardholderName (string)
 • CreditCard (string)
-• OrderDate (string)
-• Represented as 01.01.2020
+• OrderDate (string) => Represented as 01.01.2020
 • TotalPrice (float)
 • OrderItems (list of OrderItemDto)
 */
