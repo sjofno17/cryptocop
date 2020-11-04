@@ -1,6 +1,6 @@
 namespace Cryptocop.Software.API.Models.DTOs
 {
-    public class CryptocurrencyDto
+    public class CryptoCurrencyDto
     {
         public string Id { get; set; }
         public string Symbol { get; set; }

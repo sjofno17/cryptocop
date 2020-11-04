@@ -1,22 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Cryptocop.Software.API.Models.InputModels;
+using Cryptocop.Software.API.Services.Interfaces;
 
 namespace Cryptocop.Software.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/account")]
-    [ApiController]
     public class AccountController : ControllerBase
     {
+        private readonly IAccountService _accountService;
+        private readonly IJwtTokenService _jwtTokenService;
+        public AccountController(IAccountService accountService, IJwtTokenService jwtTokenService)
+        {
+            _accountService = accountService;
+            _jwtTokenService = jwtTokenService;
+        }
+
+        public IActionResult Register()
+        {
+            
+        }
         // TODO: Setup routes
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [HttpPost]
         [Route("signin")]
         public IActionResult SignIn([FromBody] LoginInputModel login)
         {
-            // TODO: call a authenticationService && return valid JWT Token
-            return Ok();
+            var user = _accountService.SignIn(login);
+            if (user == null) { return Unauthorized(); }
+            return Ok(_jwtTokenService.GenerateJwtToken(user));
         }
 
         [HttpGet]

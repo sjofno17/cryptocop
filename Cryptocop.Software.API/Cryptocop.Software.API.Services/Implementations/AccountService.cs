@@ -7,30 +7,26 @@ namespace Cryptocop.Software.API.Services.Implementations
 {
     public class AccountService : IAccountService
     {
+        private readonly IUserRepository _userRepository;
+        private readonly ITokenRepository _tokenRepository;
+
+        public AccountService(IUserRepository userRepository, ITokenRepository tokenRepository)
+        {
+            _userRepository = userRepository;
+            _tokenRepository = tokenRepository;
+        }
         public UserDto CreateUser(RegisterInputModel inputModel)
         {
-            throw new System.NotImplementedException();
+            return _userRepository.CreateUser(inputModel);
         }
 
         public UserDto AuthenticateUser(LoginInputModel loginInputModel)
         {
-            throw new System.NotImplementedException();
+            return _userRepository.AuthenticateUser(loginInputModel);
         }
          public void Logout(int tokenId)
         {
-            throw new System.NotImplementedException();
+            _tokenRepository.VoidToken(tokenId);
         }
     }
 }
-
-/*
-
-AccountService.cs (1%)
-
-• CreateUser => Creates the user using the appropriate repository class
-
-• AuthenticateUser => Authenticates the user using the appropriate repository class
-
-• Logout => Voids the JWT token using the appropriate repository class
-
-*/

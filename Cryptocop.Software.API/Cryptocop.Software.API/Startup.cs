@@ -37,7 +37,8 @@ namespace Cryptocop.Software.API
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

@@ -2,11 +2,18 @@
 using Cryptocop.Software.API.Repositories.Interfaces;
 using Cryptocop.Software.API.Models.DTOs;
 using Cryptocop.Software.API.Models.InputModels;
+using Cryptocop.Software.API.Repositories.Contexts;
 
 namespace Cryptocop.Software.API.Repositories.Implementations
 {
     public class AddressRepository : IAddressRepository
     {
+        //private readonly CryptocopDbContext _dbContext;
+
+        /*public AddressRepository(CryptocopDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }*/
         public void AddAddress(string email, AddressInputModel address)
         {
             throw new System.NotImplementedException();

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "1qB020mNbBDZ6waXt5KuSpm5Cv12O9zqdQBqVGX+RMX1jxrDvQhlys8T+Y/yDKXHEnVO6+Me1zaYb9WV39YC1Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\sjofnoskars\\Documents\\VEFÞ\\cryptocop\\Cryptocop.Software.API\\Cryptocop.Software.API.Models\\Cryptocop.Software.API.Models.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\sjofnoskars\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

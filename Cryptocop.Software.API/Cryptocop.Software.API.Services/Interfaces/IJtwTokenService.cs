@@ -1,4 +1,4 @@
-﻿namespace Cryptocop.Software.API.Services.Interfaces
+namespace Cryptocop.Software.API.Services.Interfaces
 {
     public interface IJwtTokenService
     {
