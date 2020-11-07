@@ -3,7 +3,7 @@ using Cryptocop.Software.API.Models.Entities;
 
 namespace Cryptocop.Software.API.Repositories.Contexts
 {
-    public class cryptocopDbContext : DbContext
+    public class CryptocopDbContext : DbContext
     {
         public CryptocopDbContext(DbContextOptions<CryptocopDbContext> options)
         : base(options)
@@ -20,8 +20,6 @@ namespace Cryptocop.Software.API.Repositories.Contexts
                 .WithMany(u => u.MessagesReceived); */
         }
 
-        //public DbSet<User> Users { get; set; }
-        //public DbSet<Message> Messages { get; set; }
         public DbSet<JwtToken> JwtTokens { get; set; }
     }
 }

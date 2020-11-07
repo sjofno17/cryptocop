@@ -17,12 +17,12 @@ namespace Cryptocop.Software.API.Controllers
             _jwtTokenService = jwtTokenService;
         }
 
-        public IActionResult Register()
+        /*public IActionResult Register()
         {
             
-        }
+        }*/
         // TODO: Setup routes
-        [AllowAnonymous]
+        /*[AllowAnonymous]
         [HttpPost]
         [Route("signin")]
         public IActionResult SignIn([FromBody] LoginInputModel login)
@@ -38,7 +38,7 @@ namespace Cryptocop.Software.API.Controllers
         {
             // TODO: retrieve token id from claim and blacklist token
             return NoContent();
-        }
+        }*/
     }
 }
 

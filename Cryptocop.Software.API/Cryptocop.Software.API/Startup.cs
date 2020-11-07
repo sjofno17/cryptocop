@@ -4,6 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Cryptocop.Software.API.Middlewares;
+using Cryptocop.Software.API.Repositories.Contexts;
+using Cryptocop.Software.API.Repositories.Implementations;
+using Cryptocop.Software.API.Repositories.Interfaces;
+using Cryptocop.Software.API.Services.Implementations;
+using Cryptocop.Software.API.Services.Interfaces;
 
 namespace Cryptocop.Software.API
 {
@@ -26,6 +32,18 @@ namespace Cryptocop.Software.API
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+
+            var jwtConfig = Configuration.GetSection("JwtConfig");
+            services.AddTransient<ITokenService>((c) =>
+                new TokenService(
+                    jwtConfig.GetSection("secret").Value,
+                    jwtConfig.GetSection("expirationInMinutes").Value,
+                    jwtConfig.GetSection("issuer").Value,
+                    jwtConfig.GetSection("audience").Value));
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<ICryptoCurrencyService, CryptoCurrencyService>();
+            services.AddTransient<IExchangeService, ExchangeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -39,7 +39,7 @@ namespace Cryptocop.Software.API.Middlewares
                     {
                         var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == "tokenId")?.Value;
                         int.TryParse(claim, out var tokenId);
-                        var accountService = context.HttpContext.RequestServices.GetService<IAccountService>();
+                        var accountService = context.HttpContext.RequestServices.GetService<IJwtTokenService>();
 
                         if (accountService.IsTokenBlacklisted(tokenId))
                         {
