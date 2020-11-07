@@ -1,9 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using Cryptocop.Software.API.Middlewares;
 using Cryptocop.Software.API.Repositories.Contexts;
 using Cryptocop.Software.API.Repositories.Implementations;
@@ -32,6 +36,14 @@ namespace Cryptocop.Software.API
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+            services.AddDbContext<CryptocopDbContext>(options => 
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("CryptocopDatabase"), options =>
+                {
+                    options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
+                });
+            }
+            );
 
             var jwtConfig = Configuration.GetSection("JwtConfig");
             services.AddTransient<ITokenService>((c) =>

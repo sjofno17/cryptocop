@@ -10,50 +10,49 @@ namespace Cryptocop.Software.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
-        private readonly IJwtTokenService _jwtTokenService;
-        public AccountController(IAccountService accountService, IJwtTokenService jwtTokenService)
+        private readonly ITokenService _tokenService;
+        public AccountController(IAccountService accountService, ITokenService tokenService)
         {
             _accountService = accountService;
-            _jwtTokenService = jwtTokenService;
+            _tokenService = tokenService;
         }
 
-        /*public IActionResult Register()
-        {
-            
-        }*/
         // TODO: Setup routes
-        /*[AllowAnonymous]
+        [HttpPost]
+        [Route("register")]
+        public IActionResult Register([FromBody] RegisterInputModel register)
+        {
+            var user = _accountService.CreateUser(register);
+            //if (user == null) { return Unauthorized(); }
+            return Ok(_tokenService.GenerateJwtToken(user));
+        }
+
+        [AllowAnonymous]
         [HttpPost]
         [Route("signin")]
         public IActionResult SignIn([FromBody] LoginInputModel login)
         {
-            var user = _accountService.SignIn(login);
+            var user = _accountService.AuthenticateUser(login);
             if (user == null) { return Unauthorized(); }
-            return Ok(_jwtTokenService.GenerateJwtToken(user));
+            return Ok(_tokenService.GenerateJwtToken(user));
         }
 
         [HttpGet]
         [Route("signout")]
         public IActionResult SignOut()
         {
-            // TODO: retrieve token id from claim and blacklist token
+            // int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "tokenId").Value, out var tokenId);
+            //_accountService.Logout(tokenId);
             return NoContent();
-        }*/
+        }
     }
 }
-
 /*
-
 AccountController (3%)
-
 • /api/account/register [POST] - Registers a user within the application, see Models
 section for reference
-
 • /api/account/signin [POST] - Signs the user in by checking the credentials provided
 and issuing a JWT token in return, see Models section for reference
-
 • /api/account/signout [GET] - Logs the user out by voiding the provided JWT token
 using the id found within the claim
-
-
 */
