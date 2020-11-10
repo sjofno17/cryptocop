@@ -16,12 +16,3 @@ namespace Cryptocop.Software.API.Models.InputModels
         public int Year { get; set; }
     }
 }
-
-
-/*
-PaymentCardInputModel
-• CardholderName* (string) => A minimum length of 3 characters
-• CardNumber* (string) => Must be a valid credit card number
-• Month (int) => The range for this number is an inclusive 1 to 12
-• Year (int) => The range for this number is an inclusive 0 to 99
-*/

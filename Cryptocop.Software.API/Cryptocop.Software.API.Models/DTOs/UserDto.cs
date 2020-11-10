@@ -8,11 +8,3 @@ namespace Cryptocop.Software.API.Models.DTOs
         public int TokenId { get; set; }
     }
 }
-
-/*
-UserDto
-• Id (int)
-• FullName (string)
-• Email (string)
-• TokenId (int)
-*/

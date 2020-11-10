@@ -6,9 +6,3 @@ namespace Cryptocop.Software.API.Models.InputModels
         public int PaymentCardId { get; set; }
     }
 }
-
-/*
-OrderInputModel
-• AddressId (int)
-• PaymentCardId (int)
-*/

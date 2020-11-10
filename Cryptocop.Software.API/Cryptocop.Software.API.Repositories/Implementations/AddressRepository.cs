@@ -28,16 +28,15 @@ namespace Cryptocop.Software.API.Repositories.Implementations
                 ZipCode = address.ZipCode,
                 Country = address.Country,
                 City = address.City,
-                UserId = address.User            
+                UserId = user.Id            
             };
             _dbContext.Addresses.Add(entity);
             _dbContext.SaveChanges();
-            return entity;
-            //throw new System.NotImplementedException();
         }
 
         public IEnumerable<AddressDto> GetAllAddresses(string email)
         {
+            // Gets all addresses from the database associated with the authenticated user
             var addresses = _dbContext
                             .Addresses
                             .Where(a => a.User.Email == email)
@@ -55,16 +54,13 @@ namespace Cryptocop.Software.API.Repositories.Implementations
 
         public void DeleteAddress(string email, int addressId)
         {
-            throw new System.NotImplementedException();
+            // DeleteAddress => Delete an address from the database using the id and email. 
+            //                   A user can only delete addresses associated with him
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            if(user == null) { throw new Exception("User not found"); }
+
+            _dbContext.Remove(_dbContext.Addresses.FirstOrDefault(a => a.Id == addressId));
+            _dbContext.SaveChanges();
         }
     }
 }
-/*
- AddressRepository (2.5%)
-• GetAllAddresses => Gets all addresses from the database associated with the authenticated user
-
-• AddAddress => Add an address to the database
-
-• DeleteAddress => Delete an address from the database using the id and email. 
-                   A user can only delete addresses associated with him
-*/

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Cryptocop.Software.API.Models.DTOs
 {
     public class OrderDto
@@ -12,25 +14,8 @@ namespace Cryptocop.Software.API.Models.DTOs
         public string City { get; set; }
         public string CardholderName { get; set; }
         public string CreditCard { get; set; }
-        public string OrderDate { get; set; }
+        public string OrderDate { get; set; } // Represented as 01.01.2020
         public float TotalPrice { get; set; }
-        //public list<OrderItemsDto> OrderItems { get; set; }  // OrderItems (list of OrderItemDto)
+        public List<OrderItemDto> OrderItems { get; set; }
     }
 }
-
-/*
-OrderDto
-• Id (int)
-• Email (string)
-• FullName (string)
-• StreetName (string)
-• HouseNumber (string)
-• ZipCode (string)
-• Country (string)
-• City (string)
-• CardholderName (string)
-• CreditCard (string)
-• OrderDate (string) => Represented as 01.01.2020
-• TotalPrice (float)
-• OrderItems (list of OrderItemDto)
-*/

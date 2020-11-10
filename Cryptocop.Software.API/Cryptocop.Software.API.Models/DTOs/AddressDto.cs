@@ -10,14 +10,3 @@ namespace Cryptocop.Software.API.Models.DTOs
         public string City { get; set; }
     }
 }
-
-
-/*
-AddressDto
-• Id (int)
-• StreetName (string)
-• HouseNumber (string)
-• ZipCode (string)
-• Country (string)
-• City (string)
-*/

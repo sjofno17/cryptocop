@@ -7,17 +7,6 @@ namespace Cryptocop.Software.API.Repositories.Contexts
     {
         public CryptocopDbContext(DbContextOptions<CryptocopDbContext> options) : base(options) { }
 
-        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-             modelBuilder.Entity<Message>()
-                .HasOne(m => m.UserFrom)
-                .WithMany(u => u.MessagesSent);
-
-            modelBuilder.Entity<Message>()
-                .HasOne(m => m.UserTo)
-                .WithMany(u => u.MessagesReceived);
-        }*/
-
         public DbSet<JwtToken> JwtTokens { get; set; }
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<AddressEntity> Addresses { get; set; }

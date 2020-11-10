@@ -12,11 +12,3 @@ namespace Cryptocop.Software.API.Models.InputModels
         public string Password { get; set; }
     }
 }
-
-/*
-LoginInputModel
-• Email* (string)
-• Must be a valid email address
-• Password* (string)
-• A minimum length of 8 characters 
-*/

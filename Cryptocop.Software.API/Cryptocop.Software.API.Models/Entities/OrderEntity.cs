@@ -16,5 +16,7 @@ namespace Cryptocop.Software.API.Models.Entities
         public string MaskedCreditCard { get; set; }
         public DateTime OrderDate { get; set; }
         public float TotalPrice { get; set; }
+        public UserEntity User { get; set; }
+        public OrderItemEntity ORderItems { get; set; }
     }
 }
