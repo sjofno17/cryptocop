@@ -17,6 +17,6 @@ namespace Cryptocop.Software.API.Models.Entities
         public DateTime OrderDate { get; set; }
         public float TotalPrice { get; set; }
         public UserEntity User { get; set; }
-        public OrderItemEntity ORderItems { get; set; }
+        public OrderItemEntity OrderItems { get; set; }
     }
 }

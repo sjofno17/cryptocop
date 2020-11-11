@@ -18,33 +18,33 @@ namespace Cryptocop.Software.API.Controllers
 
         // TODO: Setup routes
 
-        /*[HttpGet]
-        [Route("addresses")]
-        public IActionResult GetAddresses([FromBody] AddressInputModel address)
+        [HttpGet]
+        [Route("")]
+        public IActionResult GetAddresses()
         {
+            // /api/addresses [GET] - Gets all addresses associated with authenticated user
 
+            return Ok(_addressService.GetAllAddresses(User.Identity.Name));
         }
 
         [HttpPost]
-        [Route("addresses")]
+        [Route("")]
         public IActionResult AddAddress([FromBody] AddressInputModel address)
         {
-            var adding = _addressService.AddAddress(address);
-            //if (user == null) { return Unauthorized(); }
-            return Ok(_tokenService.GenerateJwtToken(adding));
+            // /api/addresses [POST] - Adds a new address associated with authenticated user, 
+            //                         see Models section for reference
+
+            //var newAddress = _addressService.AddAddress(address, User.Identity.Name);
+            //return CreatedAtRoute(_tokenService.GenerateJwtToken(newAddress));
+            return NoContent();
         }
 
-        [HttpDelete]
+        /*[HttpDelete]
         [Route("addresses/:id")]
         public IActionResult DeleteAddress([FromBody] RegisterInputModel register)
         {
+            // /api/addresses/{id} [DELETE] - Deletes an address by id 
 
         }*/
     }
 }
-/*
-AddressController (2%)
-• /api/addresses [GET] - Gets all addresses associated with authenticated user
-• /api/addresses [POST] - Adds a new address associated with authenticated user, see Models section for reference
-• /api/addresses/{id} [DELETE] - Deletes an address by id 
-*/

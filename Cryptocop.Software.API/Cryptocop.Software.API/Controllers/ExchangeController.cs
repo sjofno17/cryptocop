@@ -11,12 +11,9 @@ namespace Cryptocop.Software.API.Controllers
 }
 
 /*
-
-• ExchangeController (1%)
+ExchangeController (1%)
 
 • /api/exchanges [GET] - Gets all exchanges in a paginated envelope. This routes
 accepts a single query parameter called pageNumber which is used to paginate the
 results
-
-
 */

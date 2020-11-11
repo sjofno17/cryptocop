@@ -59,7 +59,7 @@ namespace Cryptocop.Software.API.Repositories.Implementations
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
             if(user == null) { throw new Exception("User not found"); }
 
-            _dbContext.Remove(_dbContext.Addresses.FirstOrDefault(a => a.Id == addressId));
+            _dbContext.Remove(_dbContext.Addresses.FirstOrDefault(a=> a.Id == addressId && a.UserId == user.Id));
             _dbContext.SaveChanges();
         }
     }

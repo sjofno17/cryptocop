@@ -34,24 +34,25 @@ namespace Cryptocop.Software.API.Repositories.Implementations
                                 City = o.City,
                                 CardholderName = o.CardHolderName,
                                 CreditCard = o.MaskedCreditCard,
-                                OrderDate = o.OrderDate,
-                                TotalPrice = o.TotalPrice,
-                                OrderItems = o.OrderItems
+                                OrderDate = o.OrderDate.ToString("dd.MM.yyyy"),
+                                TotalPrice = o.TotalPrice
                             }).ToList();            
             return orders;
         }
 
         public OrderDto CreateNewOrder(string email, OrderInputModel order)
         {
+            // *** TODO ***
+            
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
             if(user == null) { throw new Exception("User not found"); }
 
             var entity = new OrderEntity
             {
-                Email= order.Email,
+                //Address = order.AddressId,
 
             };
-            _dbContext.Addresses.Add(entity);
+            _dbContext.Orders.Add(entity);
             _dbContext.SaveChanges();
 
             return new OrderDto
@@ -60,17 +61,12 @@ namespace Cryptocop.Software.API.Repositories.Implementations
                 FullName = entity.FullName,
                 Email = entity.Email,
                 StreetName = entity.StreetName,
-                
+
             };
         }
     }
 }
-
 /*
-OrderRepository (4%)
-
-• GetOrders => Gets all orders from the database associated with the authenticated user
-
 • CreateNewOrder => Retrieve information for the user with the email passed in
                     Retrieve information for the address with the address id passed in
                     Retrieve information for the payment card with the payment card id passed in

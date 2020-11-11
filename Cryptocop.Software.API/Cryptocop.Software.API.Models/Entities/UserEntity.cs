@@ -11,5 +11,6 @@ namespace Cryptocop.Software.API.Models.Entities
         public List<AddressEntity> Addresses { get; set; }
         public List<OrderEntity> Orders { get; set; }
         public List<PaymentCardEntity> Cards { get; set; }
+        public ShoppingCartEntity ShoppingCart { get; set; }
     }
 }

@@ -44,7 +44,7 @@ namespace Cryptocop.Software.API.Repositories.Implementations
         {
             var user = _dbContext.Users.FirstOrDefault(u => 
                         u.Email == loginInputModel.Email &&
-                        u.HashedPassword == HashPassword(loginInputModel.Password));
+                        u.HashedPassword == HashingHelper.HashPassword(loginInputModel.Password));
             if(user == null) {return null; }
 
             var token = new JwtToken();
@@ -60,16 +60,3 @@ namespace Cryptocop.Software.API.Repositories.Implementations
         }
     }
 }
-/*
-UserRepository (3%)
-• CreateUser => Check if user with same email exists within the database - if it does do not continue
-                Add a user to the database where the password has been hashed using the hashing function 
-                provided
-                Create a new token within the database
-                Return the user
-
-• AuthenticateUser => Check if user has provided the correct credentials by comparing the email and password 
-                        - if it is not correct do not continue
-                        Create a new token within the database
-                        Return the user
-*/
