@@ -49,7 +49,7 @@ namespace Cryptocop.Software.API.Repositories.Implementations
                                 Country = a. Country,
                                 City = a.City
                             }).ToList();            
-            return addresses;
+            return addresses; //er þetta ekki örugglega að skila listanum?
         }
 
         public void DeleteAddress(string email, int addressId)

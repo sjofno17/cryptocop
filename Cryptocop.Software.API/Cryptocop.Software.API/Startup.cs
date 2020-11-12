@@ -52,10 +52,24 @@ namespace Cryptocop.Software.API
                     jwtConfig.GetSection("expirationInMinutes").Value,
                     jwtConfig.GetSection("issuer").Value,
                     jwtConfig.GetSection("audience").Value));
+                    
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAddressService, AddressService>();
             services.AddTransient<ICryptoCurrencyService, CryptoCurrencyService>();
             services.AddTransient<IExchangeService, ExchangeService>();
+            services.AddTransient<IJwtTokenService, JwtTokenService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IPaymentService, PaymentService>();
+            services.AddTransient<IQueueService, QueueService>();
+            services.AddTransient<IShoppingCartService, ShoppingCartService>();
+            services.AddTransient<ITokenService, TokenService>();
+
+            services.AddTransient<IAddressRepository, AddressRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
+            services.AddTransient<IShoppingCartRepository, ShoppingCartRepository>();
+            services.AddTransient<ITokenRepository, TokenRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,7 +82,7 @@ namespace Cryptocop.Software.API
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthorization();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
