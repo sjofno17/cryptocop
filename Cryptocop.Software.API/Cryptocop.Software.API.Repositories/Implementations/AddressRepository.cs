@@ -21,6 +21,7 @@ namespace Cryptocop.Software.API.Repositories.Implementations
         {
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
             if(user == null) { throw new Exception("User not found"); }
+
             var entity = new AddressEntity
             {
                 StreetName = address.StreetName,
@@ -36,7 +37,6 @@ namespace Cryptocop.Software.API.Repositories.Implementations
 
         public IEnumerable<AddressDto> GetAllAddresses(string email)
         {
-            // Gets all addresses from the database associated with the authenticated user
             var addresses = _dbContext
                             .Addresses
                             .Where(a => a.User.Email == email)
@@ -54,8 +54,6 @@ namespace Cryptocop.Software.API.Repositories.Implementations
 
         public void DeleteAddress(string email, int addressId)
         {
-            // DeleteAddress => Delete an address from the database using the id and email. 
-            //                   A user can only delete addresses associated with him
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
             if(user == null) { throw new Exception("User not found"); }
 

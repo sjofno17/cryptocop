@@ -16,3 +16,18 @@ namespace Cryptocop.Software.API.Services.Implementations
         }
     }
 }
+
+/*
+
+GetAvailableCryptocurrencies
+
+• Call the external API and get all cryptocurrencies with fields required for the
+CryptoCurrencyDto model
+
+• Deserializes the response to a list - I would advise to use the HttpResponseMessageExtensions 
+which is located within Helpers/ to deserialize and flatten the response.
+
+• Return a filtered list where only the available cryptocurrencies BitCoin (BTC),
+Ethereum (ETH), Tether (USDT) and Monero (XMR) are within the list
+
+*/

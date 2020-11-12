@@ -60,6 +60,7 @@ namespace Cryptocop.Software.API.Repositories.Implementations
 
         public void DeleteCart(string email)
         {
+            // The cart is deleted when the order is created, we can use that method then
             throw new System.NotImplementedException();
         }
     }

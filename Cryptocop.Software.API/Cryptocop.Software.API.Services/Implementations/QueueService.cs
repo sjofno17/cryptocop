@@ -12,13 +12,24 @@ namespace Cryptocop.Software.API.Services.Implementations
     {
         public void PublishMessage(string routingKey, object body)
         {
-            throw new NotImplementedException();
+            string jsonString = JsonConvert.SerializeObject(body);
+
+            ConnectionFactory factory = new ConnectionFactory();
+            //factory.Uri = "amqp://user:pass@hostName:port/vhost";
+
+            IConnection conn = factory.CreateConnection();
+
         }
 
         public void Dispose()
         {
             // TODO: Dispose the connection and channel
+            // is suppose to dispose of the current channel and connection associated with the service.
             throw new NotImplementedException();
         }
     }
 }
+/*
+• PublishMessage =>  Serialize the object to JSON
+                    Publish the message using a channel created with the RabbitMQ client
+*/

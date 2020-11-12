@@ -22,21 +22,27 @@ namespace Cryptocop.Software.API.Repositories.Implementations
         public UserDto CreateUser(RegisterInputModel inputModel)
         {   
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == inputModel.Email);
-            if(user != null) { throw new Exception("User already exist"); }
+            if(user != null) { throw new Exception("User already exist"); } // *** TODO: er þetta nóg? ***
+
             var entity = new UserEntity
             {
                 Email = inputModel.Email,
                 FullName = inputModel.FullName,
-                HashedPassword = inputModel.Password          
+                HashedPassword = HashingHelper.HashPassword(inputModel.Password)          
             };
             _dbContext.Users.Add(entity);
+            _dbContext.SaveChanges();
+
+            var token = new JwtToken();
+            _dbContext.JwtTokens.Add(token);
             _dbContext.SaveChanges();
 
             return new UserDto
             {
                 Id = user.Id,
                 FullName = user.FullName,
-                Email = user.Email
+                Email = user.Email,
+                TokenId = token.Id
             };
         }
 

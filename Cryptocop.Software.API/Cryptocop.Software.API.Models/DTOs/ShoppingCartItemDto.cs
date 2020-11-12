@@ -9,12 +9,3 @@ namespace Cryptocop.Software.API.Models.DTOs
         public float TotalPrice { get; set; }
     }
 }
-
-/*
-ShoppingCartItemDto
-• Id (int)
-• ProductIdentifier (string)
-• Quantity (float)
-• UnitPrice (float)
-• TotalPrice (float)
-*/
