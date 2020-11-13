@@ -13,12 +13,11 @@ namespace Cryptocop.Software.API.Controllers
         {
             _orderService = orderService;
         }
-        // TODO: Setup routes
+        
         [HttpGet]
         [Route("")]
         public IActionResult GetOrders()
         {
-            // Gets all orders associated with the authenticated user
             return Ok(_orderService.GetOrders(User.Identity.Name));
         }
 
@@ -27,10 +26,10 @@ namespace Cryptocop.Software.API.Controllers
         public IActionResult AddOrder([FromBody] OrderInputModel order)
         {
             // Adds a new order associated with the authenticated user, see Models section for reference
+            if(!ModelState.IsValid) { return BadRequest("Order is not properly constructed!"); }
 
-            //var newOrder = _orderService.AddOrder(order, User.Identity.Name);
-            //return CreatedAtRoute();
-            return NoContent();
+            _orderService.CreateNewOrder(User.Identity.Name, order);
+            return StatusCode(201, order);
         }
     }
 }

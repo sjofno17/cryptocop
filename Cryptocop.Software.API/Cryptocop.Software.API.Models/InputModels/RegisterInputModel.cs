@@ -18,11 +18,3 @@ namespace Cryptocop.Software.API.Models.InputModels
         public string PasswordConfirmation { get; set; }
     }
 }
-
-/*
-RegisterInputModel
-• Email* (string) => Must be a valid email address
-• FullName* (string) => A minimum length of 3 characters
-• Password* (string) => A minimum length of 8 characters
-• PasswordConfirmation* (string) => A minimum length of 8 characters => Must be the same value as the property Password
-*/

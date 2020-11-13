@@ -16,14 +16,10 @@ namespace Cryptocop.Software.API.Controllers
             _tokenService = tokenService;
         }
 
-        // TODO: Setup routes
-
         [HttpGet]
         [Route("")]
         public IActionResult GetAddresses()
         {
-            // /api/addresses [GET] - Gets all addresses associated with authenticated user
-
             return Ok(_addressService.GetAllAddresses(User.Identity.Name));
         }
 
@@ -31,21 +27,18 @@ namespace Cryptocop.Software.API.Controllers
         [Route("")]
         public IActionResult AddAddress([FromBody] AddressInputModel address)
         {
-            // /api/addresses [POST] - Adds a new address associated with authenticated user, 
-            //                         see Models section for reference
+            if(!ModelState.IsValid) { return BadRequest("Address is not properly constructed!"); }
 
-            //return Ok(_addressService.AddAddress(User.Identity.Name, address));
-            return NoContent();
+            _addressService.AddAddress(User.Identity.Name, address);
+            return StatusCode(201, address);
         }
 
         [HttpDelete]
-        [Route("addresses/:id")]
-        public IActionResult DeleteAddress([FromBody] RegisterInputModel register)
+        [Route("{id}")]
+        public IActionResult DeleteAddress(int addressId)
         {
-            // /api/addresses/{id} [DELETE] - Deletes an address by id 
-
+            _addressService.DeleteAddress(User.Identity.Name, addressId);
             return NoContent();
-
         }
     }
 }

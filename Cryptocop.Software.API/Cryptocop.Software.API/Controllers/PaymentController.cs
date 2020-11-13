@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Cryptocop.Software.API.Services.Interfaces;
+using Cryptocop.Software.API.Models.InputModels;
 
 namespace Cryptocop.Software.API.Controllers
 {
@@ -6,18 +8,28 @@ namespace Cryptocop.Software.API.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        // TODO: Setup routes
+        private readonly IPaymentService _paymentService;
+        
+        public PaymentController(IPaymentService paymentService)
+        {
+            _paymentService = paymentService;
+        }
+
+        [HttpGet]
+        [Route("")]
+        public IActionResult GetPaymentCards()
+        {
+            return Ok(_paymentService.GetStoredPaymentCards(User.Identity.Name));
+        }
+
+        [HttpPost]
+        [Route("")]
+        public IActionResult AddPaymentCard([FromBody] PaymentCardInputModel card)
+        {
+            if(!ModelState.IsValid) { return BadRequest("Card is not properly constructed!"); }
+
+            _paymentService.AddPaymentCard(User.Identity.Name, card);
+            return StatusCode(201, card);
+        }
     }
 }
-
-/*
-
-PaymentController (2%)
-
-• /api/payments [GET] - Gets all payment cards associated with the authenticated user
-
-• /api/payments [POST] - Adds a new payment card associated with the authenticated
-user, see Models section for reference
-
-
-*/

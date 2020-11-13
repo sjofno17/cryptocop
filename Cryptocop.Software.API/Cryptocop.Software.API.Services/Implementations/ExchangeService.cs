@@ -11,6 +11,15 @@ namespace Cryptocop.Software.API.Services.Implementations
     {
         public Task<Envelope<ExchangeDto>> GetExchanges(int pageNumber = 1)
         {
+            /*var envelope = new Envelope<ExchangeDto> 
+            {
+                Items = new List<ExchangeDto>
+                {
+                    
+                }, // This should of course be populated
+                CurrentPage = 1
+
+            };*/
             throw new System.NotImplementedException();
         }
     }
