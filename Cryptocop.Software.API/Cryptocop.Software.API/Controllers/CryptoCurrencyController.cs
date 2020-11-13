@@ -16,14 +16,13 @@ namespace Cryptocop.Software.API.Controllers
 
         [HttpGet]
         [Route("")]
-        public IActionResult GetPaymentCards()
+        public IActionResult GetCryptoCurrencies()
         {
             // Gets all available cryptocurrencies - the only available cryptocurrencies in this 
             //     platform are BitCoin (BTC), Ethereum (ETH), Tether (USDT) and Monero (XMR)
 
+            return Ok(_cryptoCurrencyService.GetAvailableCryptocurrencies());
 
-            //return Ok(_cryptoCurrencyService.GetAvailableCryptocurrencies(User.Identity.Name));
-            return NoContent();
         }
     }
 }

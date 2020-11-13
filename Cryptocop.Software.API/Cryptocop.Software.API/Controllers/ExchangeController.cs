@@ -16,14 +16,12 @@ namespace Cryptocop.Software.API.Controllers
 
         [HttpGet]
         [Route("")]
-        public IActionResult GetExhanges()
+        public IActionResult GetExhanges(int pageNumber)
         {
             // Gets all exchanges in a paginated envelope. This routes accepts a single query 
             // parameter called pageNumber which is used to paginate the results
 
-
-            //return Ok(_cryptoCurrencyService.GetAvailableCryptocurrencies(User.Identity.Name));
-            return NoContent();
+            return Ok(_exchangeService.GetExchanges(pageNumber));
         }
     }
 }

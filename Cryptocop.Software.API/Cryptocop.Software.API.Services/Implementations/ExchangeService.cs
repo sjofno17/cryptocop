@@ -15,9 +15,8 @@ namespace Cryptocop.Software.API.Services.Implementations
             {
                 Items = new List<ExchangeDto>
                 {
-                    
-                }, // This should of course be populated
-                CurrentPage = 1
+                    id
+                },
 
             };*/
             throw new System.NotImplementedException();

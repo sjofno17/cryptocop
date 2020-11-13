@@ -14,10 +14,21 @@ namespace Cryptocop.Software.API.Services.Implementations
         {
             string jsonString = JsonConvert.SerializeObject(body);
 
-            ConnectionFactory factory = new ConnectionFactory();
-            //factory.Uri = "amqp://user:pass@hostName:port/vhost";
+            var factory = new ConnectionFactory() { HostName = "localhost" };
 
-            IConnection conn = factory.CreateConnection();
+            using (var connection = factory.CreateConnection())
+            {
+                using (var channel = connection.CreateModel())
+                {
+                    
+                    channel.BasicPublish(
+                         exchange: "",
+                         routingKey: "hello",
+                         basicProperties: null,
+                         body: body);
+                }
+            }
+            Dispose();
 
         }
 

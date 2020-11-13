@@ -42,11 +42,13 @@ namespace Cryptocop.Software.API.Controllers
 
         [HttpPatch]
         [Route("{id}")]
-        public IActionResult UpdateQuantity([FromBody] ShoppingCartItemInputModel item)
+        public IActionResult UpdateQuantity(float quantity, int id)
         {
             // /api/cart/{id} [PATCH] - Updates the quantity for a shopping cart item
 
-            // *** TODO ***
+            if(!ModelState.IsValid){ return BadRequest(); }
+            
+            _shoppingCartService.UpdateCartItemQuantity(User.Identity.Name, id, quantity);
             return NoContent();
         }
 
