@@ -7,6 +7,7 @@ using Cryptocop.Software.API.Models.DTOs;
 using Cryptocop.Software.API.Models.InputModels;
 using Cryptocop.Software.API.Repositories.Contexts;
 using Cryptocop.Software.API.Models.Entities;
+using Cryptocop.Software.API.Repositories.Helpers;
 
 namespace Cryptocop.Software.API.Repositories.Implementations
 {
@@ -20,11 +21,6 @@ namespace Cryptocop.Software.API.Repositories.Implementations
         }
         public IEnumerable<OrderDto> GetOrders(string email)
         {
-            //Comment frá Arnari
-            // Eina sem ég myndi bæta við þarna væri að setja inn OrderItems og mappa yfir í OrderItemDto úr entity model sem kemur í gegnum
-            // o.OrderItems.Select(oi => new OrderItemDto { /* Here things should be mapped */ })
-            // Eitt sem er gott að nota hér er Include() (https://docs.microsoft.com/en-us/ef/core/querying/related-data/eager)
-
             var orders = _dbContext
                             .Orders
                             .Where(e => e.User.Email == email)
@@ -41,9 +37,19 @@ namespace Cryptocop.Software.API.Repositories.Implementations
                                 CardholderName = o.CardHolderName,
                                 CreditCard = o.MaskedCreditCard,
                                 OrderDate = o.OrderDate.ToString("dd.MM.yyyy"),
-                                TotalPrice = o.TotalPrice//,
+                                TotalPrice = o.TotalPrice,
                                 //OrderItems = o.OrderItems.Select(oi => new OrderItemDto { /* Here things should be mapped */ }).ToList()
-                            }).ToList();            
+                                OrderItems = _dbContext.OrderItems
+                                    .Where(oId => oId.OrderId == oId.OrderId)
+                                    .Select(oItem => new OrderItemDto
+                                    {
+                                        Id = o.OrderItems.Id,
+                                        ProductIdentifier = o.OrderItems.ProductIdentifier,
+                                        Quantity = o.OrderItems.Quantity,
+                                        UnitPrice = o.OrderItems.UnitPrice,
+                                        TotalPrice = o.OrderItems.TotalPrice
+                                    }).ToList()
+                            }).ToList();
             return orders;
         }
 
@@ -51,31 +57,41 @@ namespace Cryptocop.Software.API.Repositories.Implementations
         {
             // Retrieve information for the user with the email passed in
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
-
-            // ef notandinn er ekki til þá er ekkert gert
             if(user == null) { throw new Exception("User not found"); }
 
-            // *** TODO ***
             // Retrieve information for the address with the address id passed in
-
+            var address = _dbContext.Addresses.FirstOrDefault(a => a.Id == order.AddressId);
             // Retrieve information for the payment card with the payment card id passed in
+            var card = _dbContext.PaymentCards.FirstOrDefault(c => c.Id == order.PaymentCardId);
+            var cardNumber = card.CardNumber;
+            var shoppingCart = _dbContext.ShoppingCarts.FirstOrDefault(s => s.UserId == user.Id);
+            var fullName = user.FullName;
 
-
-            // Create a new order where the credit card number has been masked, e.g. ************5555            
-            // hér bý ég til order, en hvernig sæki ég þessar upplýsingar?
+            float totalPrice = 0;
+            for(int i = 0; i < shoppingCart.ShoppingCartItems.Count(); i++)
+            {
+                totalPrice += shoppingCart.ShoppingCartItems[i].UnitPrice * shoppingCart.ShoppingCartItems[i].Quantity;
+            }
+            
+            // Create a new order where the credit card number has been masked, e.g. ************5555 
             var entity = new OrderEntity
             {
-                //CardHolderName = order.PaymentCardId.,
-
-
-
-
-            };
+                Email = user.Email,
+                FullName = fullName,
+                StreetName = address.StreetName,
+                HouseNumber = address.HouseNumber,
+                ZipCode = address.ZipCode,
+                Country = address.Country,
+                City = address.City,
+                CardHolderName = card.CardHolderName,
+                MaskedCreditCard = PaymentCardHelper.MaskPaymentCard(card.CardNumber),
+                OrderDate = DateTime.Now,
+                TotalPrice = totalPrice 
+            };       
             _dbContext.Orders.Add(entity);
             _dbContext.SaveChanges();
 
             // Return the order but here the credit card number should not be masked
-            // á að de-maska það þá?
             return new OrderDto
             {
                 Id = entity.Id,
@@ -86,7 +102,7 @@ namespace Cryptocop.Software.API.Repositories.Implementations
                 ZipCode = entity.ZipCode,
                 Country = entity.Country,
                 CardholderName = entity.CardHolderName,
-                CreditCard = entity.MaskedCreditCard,
+                CreditCard = cardNumber,
                 OrderDate = entity.OrderDate.ToString("dd.MM.yyyy"),
                 TotalPrice = entity.TotalPrice
             };

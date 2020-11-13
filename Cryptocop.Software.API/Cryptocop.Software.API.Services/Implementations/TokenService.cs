@@ -45,9 +45,5 @@ namespace Cryptocop.Software.API.Services.Implementations
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
         }
-        public bool IsTokenBlacklisted(int tokenId)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

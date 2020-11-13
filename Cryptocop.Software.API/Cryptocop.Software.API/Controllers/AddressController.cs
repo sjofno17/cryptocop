@@ -34,17 +34,18 @@ namespace Cryptocop.Software.API.Controllers
             // /api/addresses [POST] - Adds a new address associated with authenticated user, 
             //                         see Models section for reference
 
-            //var newAddress = _addressService.AddAddress(address, User.Identity.Name);
-            //return CreatedAtRoute(_tokenService.GenerateJwtToken(newAddress));
+            //return Ok(_addressService.AddAddress(User.Identity.Name, address));
             return NoContent();
         }
 
-        /*[HttpDelete]
+        [HttpDelete]
         [Route("addresses/:id")]
         public IActionResult DeleteAddress([FromBody] RegisterInputModel register)
         {
             // /api/addresses/{id} [DELETE] - Deletes an address by id 
 
-        }*/
+            return NoContent();
+
+        }
     }
 }

@@ -10,15 +10,3 @@ namespace Cryptocop.Software.API.Models.DTOs
         public string ProjectDetails { get; set; }
     }
 }
-
-
-
-/*
-CryptocurrencyDto
-• Id (string)
-• Symbol (string)
-• Name (string)
-• Slug (string)
-• PriceInUsd (float)
-• ProjectDetails (string)
-*/

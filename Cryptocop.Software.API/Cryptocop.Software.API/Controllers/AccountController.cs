@@ -10,6 +10,7 @@ namespace Cryptocop.Software.API.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly ITokenService _tokenService;
+        
         public AccountController(IAccountService accountService, ITokenService tokenService)
         {
             _accountService = accountService;

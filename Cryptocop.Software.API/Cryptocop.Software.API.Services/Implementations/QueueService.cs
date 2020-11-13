@@ -25,11 +25,14 @@ namespace Cryptocop.Software.API.Services.Implementations
         {
             // TODO: Dispose the connection and channel
             // is suppose to dispose of the current channel and connection associated with the service.
+
+            //channel.Close();
+            //conn.Close();
             throw new NotImplementedException();
         }
     }
 }
 /*
 • PublishMessage =>  Serialize the object to JSON
-                    Publish the message using a channel created with the RabbitMQ client
+                     Publish the message using a channel created with the RabbitMQ client
 */

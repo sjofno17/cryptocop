@@ -12,14 +12,3 @@ namespace Cryptocop.Software.API.Models.DTOs
         public DateTime LastTrade { get; set; } // (nullable datetime)
     }
 }
-
-
-/* 
-ExchangeDto
-• Id (string)
-• Name (string)
-• Slug (string)
-• AssetSymbol (string)
-• PriceInUsd (nullable float)
-• LastTrade (nullable datetime)
-*/

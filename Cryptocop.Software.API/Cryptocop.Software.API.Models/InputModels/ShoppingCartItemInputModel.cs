@@ -11,9 +11,3 @@ namespace Cryptocop.Software.API.Models.InputModels
         public float Quantity { get; set; }  // (nullable float) 
     }
 }
-
-/*
-ShoppingCartItemInputModel
-• ProductIdentifier* (string)
-• Quantity* (nullable float) => The range for this number is an include 0.01 to the float type maximum value
-*/

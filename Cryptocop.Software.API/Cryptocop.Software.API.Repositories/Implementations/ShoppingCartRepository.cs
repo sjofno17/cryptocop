@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Cryptocop.Software.API.Repositories.Interfaces;
 using Cryptocop.Software.API.Models.DTOs;
 using Cryptocop.Software.API.Models.InputModels;
 using Cryptocop.Software.API.Repositories.Contexts;
+using Cryptocop.Software.API.Models.Entities;
 
 namespace Cryptocop.Software.API.Repositories.Implementations
 {
@@ -19,75 +21,105 @@ namespace Cryptocop.Software.API.Repositories.Implementations
         public IEnumerable<ShoppingCartItemDto> GetCartItems(string email)
         {
             // Gets all cart items from the database associated with the authenticated user
-            /*var cartItems = _dbContext
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            if(user == null) { throw new Exception("User not found"); }
+
+            var shoppingCart = _dbContext.ShoppingCarts.FirstOrDefault(s => s.UserId == user.Id);
+
+            var cartItems = _dbContext
                             .ShoppingCartItems
-                            .Join(_dbContext.Users, u => u.Email == email)
-                            .Join(_dbContext.ShoppingCarts,
-                            s => s.ShoppingCartId == id)
-                            .Where(a => )
+                            .Where(c => c.ShoppingCartId == shoppingCart.Id)
                             .Select(a => new ShoppingCartItemDto
                             {
                                 Id = a.Id,
                                 ProductIdentifier = a.ProductIdentifier,
                                 Quantity = a.Quantity,
-                                UnitPrice = a.UnitPrice//,
-                                //TotalPrice = a. TotalPrice 
-                                // shoppingcartItemEntity á ekki totalprice
-                            }).ToList();            
-            return cartItems;*/
-            throw new System.NotImplementedException();
+                                UnitPrice = a.UnitPrice,
+                                TotalPrice = a.UnitPrice * a.Quantity
+                            }).ToList();  
+            return cartItems; 
         }
 
-        public void AddCartItem(string email, ShoppingCartItemInputModel shoppingCartItemItem, float priceInUsd)
+        public void AddCartItem(string email, ShoppingCartItemInputModel shoppingCartItem, float priceInUsd)
         {
             // Add a cart item to the database
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            var itemId = _dbContext.ShoppingCartItems.OrderByDescending(o => o.Id).FirstOrDefault().Id + 1;
 
-            // join shoppingcart to get the user?
-            
-            /*var cartItem = _dbContext
-                            .ShoppingCartItems
-                            .Where(a => a.Id == email)
-                            .Select(a => new PaymentCardDto
-                            {
-                                Id = a.Id,
-                                CardholderName = a.CardHolderName,
-                                CardNumber = a.CardNumber,
-                                Month= a.Month,
-                                Year = a.Year
-                            }).ToList();    */
-                            
+            var cartItem =  new ShoppingCartItemEntity
+            {
+                Id = itemId,
+                ShoppingCartId = user.ShoppingCart.Id,
+                ProductIdentifier = shoppingCartItem.ProductIdentifier,
+                Quantity = shoppingCartItem.Quantity,
+                UnitPrice = priceInUsd
+            };
+
+            _dbContext.ShoppingCartItems.Add(cartItem);
+            _dbContext.SaveChanges();
         }
 
         public void RemoveCartItem(string email, int id)
         {
             // Remove a cart item from the database
-            
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
-            //if(user == null) { throw new Exception("User not found"); }
+            if(user == null) { throw new Exception("User not found"); }
 
-            // ég er að remova shopping cart hér en hvernig fer ég að því að eyða bara item?
-            _dbContext.Remove(_dbContext.ShoppingCarts.FirstOrDefault(a=> a.Id == id && a.UserId == user.Id));
+            var cartItem = _dbContext.ShoppingCartItems.FirstOrDefault(i => i.Id == id);
+            if(cartItem == null) { throw new Exception("Shoppingcart item not found"); }
+            if(user.ShoppingCart.Id != cartItem.ShoppingCartId) { throw new Exception("User does not have this item"); }
+
+            _dbContext.Remove(_dbContext.ShoppingCarts.FirstOrDefault(a=> a.Id == id));
             _dbContext.SaveChanges();
         }
 
         public void UpdateCartItemQuantity(string email, int id, float quantity)
         {
             // Update a cart items quantity within the database
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            if(user == null) { throw new Exception("User not found"); }
 
-            // when new item is put in cart then add 1 to the quantity? and minus when removed
-            throw new System.NotImplementedException();
+            var cartItem = _dbContext.ShoppingCartItems.FirstOrDefault(s => s.Id == id);
+            if(cartItem == null) { throw new Exception("Shoppingcart item not found"); }
+            if(user.ShoppingCart.Id != cartItem.ShoppingCartId) { throw new Exception("User does not have this item"); }
+
+            var item =  new ShoppingCartItemEntity
+            {
+                Id = cartItem.Id,
+                ShoppingCartId = user.ShoppingCart.Id,
+                ProductIdentifier = cartItem.ProductIdentifier,
+                Quantity = quantity,
+                UnitPrice = cartItem.UnitPrice
+            };
+            _dbContext.ShoppingCartItems.Update(item);
+            _dbContext.SaveChanges();
         }
 
         public void ClearCart(string email)
         {
             // Clear all cart items from the shopping cart in the database
-            throw new System.NotImplementedException();
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            if(user == null) { throw new Exception("User not found"); }
+
+            var shoppingCart = _dbContext.ShoppingCarts.FirstOrDefault(s => s.UserId == user.Id);
+            var cartItems = _dbContext.ShoppingCartItems.Where(i => i.ShoppingCartId == shoppingCart.Id);
+
+            foreach(ShoppingCartItemEntity item in cartItems)
+            {
+                _dbContext.ShoppingCartItems.Remove(item);
+                _dbContext.SaveChanges();
+            }
         }
 
         public void DeleteCart(string email)
         {
             // The cart is deleted when the order is created, we can use that method then
-            throw new System.NotImplementedException();
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            if(user == null) { throw new Exception("User not found"); }
+
+            var shoppingCart = _dbContext.ShoppingCarts.FirstOrDefault(s => s.Id == user.ShoppingCart.Id);
+            _dbContext.ShoppingCarts.Remove(shoppingCart);
+            _dbContext.SaveChanges();
         }
     }
 }

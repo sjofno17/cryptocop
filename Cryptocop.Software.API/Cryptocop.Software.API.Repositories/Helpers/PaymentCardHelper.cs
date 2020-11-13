@@ -17,7 +17,7 @@
             // numbers in first are masked
             var masking = new string('*', len - last.Length);
 
-            return masking + last;
+            return masking + last; 
         }
     }
 }

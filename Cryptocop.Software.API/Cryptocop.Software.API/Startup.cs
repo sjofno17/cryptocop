@@ -45,6 +45,7 @@ namespace Cryptocop.Software.API
             }
             );
 
+            // tokenService
             var jwtConfig = Configuration.GetSection("JwtConfig");
             services.AddTransient<ITokenService>((c) =>
                 new TokenService(
@@ -53,6 +54,7 @@ namespace Cryptocop.Software.API
                     jwtConfig.GetSection("issuer").Value,
                     jwtConfig.GetSection("audience").Value));
                     
+            // services
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAddressService, AddressService>();
             services.AddTransient<ICryptoCurrencyService, CryptoCurrencyService>();
@@ -62,8 +64,8 @@ namespace Cryptocop.Software.API
             services.AddTransient<IPaymentService, PaymentService>();
             services.AddTransient<IQueueService, QueueService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
-            services.AddTransient<ITokenService, TokenService>();
 
+            // repositories
             services.AddTransient<IAddressRepository, AddressRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();

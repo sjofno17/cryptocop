@@ -12,6 +12,7 @@ namespace Cryptocop.Software.API.Services.Implementations
     {
         public Task<IEnumerable<CryptoCurrencyDto>> GetAvailableCryptocurrencies()
         {
+            
             throw new System.NotImplementedException();
         }
     }
