@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Cryptocop.Software.API.Services.Interfaces;
 using Cryptocop.Software.API.Models.InputModels;
 
 namespace Cryptocop.Software.API.Controllers
 {
+    [Authorize]
     [Route("api/payments")]
     [ApiController]
     public class PaymentController : ControllerBase

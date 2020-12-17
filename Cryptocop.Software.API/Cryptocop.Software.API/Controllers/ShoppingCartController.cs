@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Cryptocop.Software.API.Services.Interfaces;
 using Cryptocop.Software.API.Models.InputModels;
 
 namespace Cryptocop.Software.API.Controllers
 {
+    [Authorize]
     [Route("api/cart")]
     [ApiController]
     public class ShoppingCartController : ControllerBase
@@ -44,12 +46,10 @@ namespace Cryptocop.Software.API.Controllers
         [Route("{id}")]
         public IActionResult UpdateQuantity(float quantity, int id)
         {
-            // /api/cart/{id} [PATCH] - Updates the quantity for a shopping cart item
-
             if(!ModelState.IsValid){ return BadRequest(); }
             
             _shoppingCartService.UpdateCartItemQuantity(User.Identity.Name, id, quantity);
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete]

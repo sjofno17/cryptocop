@@ -9,29 +9,29 @@ namespace Cryptocop.Software.API.Services.Implementations
 {
     public class ExchangeService : IExchangeService
     {
-        public Task<Envelope<ExchangeDto>> GetExchanges(int pageNumber = 1)
+        public async Task<Envelope<ExchangeDto>> GetExchanges(int pageNumber = 1)
         {
+            HttpClient client = new HttpClient();
+
+            // Call the external API with a paginated query and get all exchanges with fields required for the ExchangeDto model
+            var getExhanges = "https://data.messari.io/api/v1/markets?page={pageNumber}&fields=id,exchange_name,exchange_slug,quote_asset_symbol,price_usd,last_trade_at";
+
+            client.DefaultRequestHeaders.Accept.Clear();
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var response = await client.GetAsync(getExhanges);
+            // Deserialize the response to a list - I would advise to use the HttpResponseMessageExtensions to deserialize and flatten the response
+            var responseFlat = await HttpResponseMessageExtensions.DeserializeJsonToList<ExchangeDto>(response, true);
+
+            // Create an envelope and add the list to the envelope and return that
             /*var envelope = new Envelope<ExchangeDto> 
             {
-                Items = new List<ExchangeDto>
-                {
-                    id
-                },
+                ?? = new List<ExchangeDto>(responseFlat);
 
-            };*/
-            throw new System.NotImplementedException();
+            };
+            return envelope;*/
+            return null;
         }
     }
 }
-/*
-GetExchanges
 
-• Call the external API with a paginated query and get all exchanges with fields
-required for the ExchangeDto model
-
-• Deserialize the response to a list - I would advise to use the HttpResponseMessageExtensions 
-    which is located within Helpers/ to deserialize and flatten the response.
-
-• Create an envelope and add the list to the envelope and return that
-
-*/

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Cryptocop.Software.API.Services.Interfaces;
 
 namespace Cryptocop.Software.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/cryptocurrencies")]
     public class CryptoCurrencyController : ControllerBase
@@ -18,8 +20,7 @@ namespace Cryptocop.Software.API.Controllers
         [Route("")]
         public IActionResult GetCryptoCurrencies()
         {
-            // Gets all available cryptocurrencies - the only available cryptocurrencies in this 
-            //     platform are BitCoin (BTC), Ethereum (ETH), Tether (USDT) and Monero (XMR)
+            // should await the call
 
             return Ok(_cryptoCurrencyService.GetAvailableCryptocurrencies());
 

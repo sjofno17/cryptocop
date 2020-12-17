@@ -25,7 +25,7 @@ namespace Cryptocop.Software.API.Services.Implementations
         public Task AddCartItem(string email, ShoppingCartItemInputModel shoppingCartItem)
         {
             // *** TODO ***
-            var price = 0;
+           /* var price = 0;
             // Call the external API using the product identifier as an URL parameter to receive the
             //        current price in USD for this particular cryptocurrency
             client.DefaultRequestHeaders.Accept.Clear();
@@ -41,8 +41,8 @@ namespace Cryptocop.Software.API.Services.Implementations
                 price = des.PriceInUsd;
             //Add it to the database using the appropriate repository class
             return _shoppingCartRepository.AddCartItem(email, shoppingCartItem, price);
-            
-            //throw new System.NotImplementedException();
+            */
+            throw new System.NotImplementedException();
         }
 
         public void RemoveCartItem(string email, int id)

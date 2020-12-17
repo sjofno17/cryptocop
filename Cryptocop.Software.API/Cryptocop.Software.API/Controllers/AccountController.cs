@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Cryptocop.Software.API.Models.InputModels;
 using Cryptocop.Software.API.Services.Interfaces;
 
 namespace Cryptocop.Software.API.Controllers
 {
+    [Authorize]
     [Route("api/account")]
     public class AccountController : ControllerBase
     {
@@ -17,18 +19,24 @@ namespace Cryptocop.Software.API.Controllers
             _tokenService = tokenService;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("register")]
         public IActionResult Register([FromBody] RegisterInputModel register)
         {
+            if(!ModelState.IsValid) { return BadRequest("Registation is not properly constructed!"); }
+
             var user = _accountService.CreateUser(register);
             return Ok(_tokenService.GenerateJwtToken(user));
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("signin")]
         public IActionResult SignIn([FromBody] LoginInputModel login)
         {
+            if(!ModelState.IsValid) { return BadRequest("Signin is not properly constructed!"); }
+
             var user = _accountService.AuthenticateUser(login);
             if (user == null) { return Unauthorized(); }
             return Ok(_tokenService.GenerateJwtToken(user));

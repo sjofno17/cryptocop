@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-
 using Cryptocop.Software.API.Middlewares;
 using Cryptocop.Software.API.Repositories.Contexts;
 using Cryptocop.Software.API.Repositories.Implementations;
@@ -44,6 +43,11 @@ namespace Cryptocop.Software.API
                 });
             }
             );
+            services.AddAuthentication(config =>
+            {
+                config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtTokenAuthentication(Configuration);
 
             // tokenService
             var jwtConfig = Configuration.GetSection("JwtConfig");
@@ -84,7 +88,7 @@ namespace Cryptocop.Software.API
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthorization();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

@@ -21,6 +21,7 @@ namespace Cryptocop.Software.API.Middlewares
             var issuer = jwtConfig.GetSection("issuer").Value;
             var audience = jwtConfig.GetSection("audience").Value;
             var key = Encoding.ASCII.GetBytes(secret);
+            
             builder.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, x =>
             {
                 x.SaveToken = true;

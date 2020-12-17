@@ -12,7 +12,7 @@ namespace Cryptocop.Software.API.Services.Implementations
     {
         public void PublishMessage(string routingKey, object body)
         {
-            string jsonString = JsonConvert.SerializeObject(body);
+            /*string jsonString = JsonConvert.SerializeObject(body);
 
             var factory = new ConnectionFactory() { HostName = "localhost" };
 
@@ -27,8 +27,9 @@ namespace Cryptocop.Software.API.Services.Implementations
                          basicProperties: null,
                          body: body);
                 }
-            }
-            Dispose();
+            }*/
+            // Dispose();
+            throw new NotImplementedException();
 
         }
 

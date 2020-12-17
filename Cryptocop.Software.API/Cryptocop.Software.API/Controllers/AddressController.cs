@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Cryptocop.Software.API.Models.InputModels;
 using Cryptocop.Software.API.Services.Interfaces;
 
 namespace Cryptocop.Software.API.Controllers
 {
+    [Authorize]
     [Route("api/addresses")]
     [ApiController]
     public class AddressController : ControllerBase
