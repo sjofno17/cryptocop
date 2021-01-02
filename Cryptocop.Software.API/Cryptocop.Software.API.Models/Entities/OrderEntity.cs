@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Cryptocop.Software.API.Models.Entities
 {
@@ -17,6 +18,6 @@ namespace Cryptocop.Software.API.Models.Entities
         public DateTime OrderDate { get; set; }
         public float TotalPrice { get; set; }
         public UserEntity User { get; set; }
-        public OrderItemEntity OrderItems { get; set; }
+        public List<OrderItemEntity> OrderItems { get; set; }
     }
 }

@@ -44,11 +44,9 @@ namespace Cryptocop.Software.API.Repositories.Implementations
         {
             // Add a cart item to the database
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
-            var itemId = _dbContext.ShoppingCartItems.OrderByDescending(o => o.Id).FirstOrDefault().Id + 1;
 
             var cartItem =  new ShoppingCartItemEntity
             {
-                Id = itemId,
                 ShoppingCartId = user.ShoppingCart.Id,
                 ProductIdentifier = shoppingCartItem.ProductIdentifier,
                 Quantity = shoppingCartItem.Quantity,
@@ -69,7 +67,7 @@ namespace Cryptocop.Software.API.Repositories.Implementations
             if(cartItem == null) { throw new Exception("Shoppingcart item not found"); }
             if(user.ShoppingCart.Id != cartItem.ShoppingCartId) { throw new Exception("User does not have this item"); }
 
-            _dbContext.Remove(_dbContext.ShoppingCarts.FirstOrDefault(a=> a.Id == id));
+            _dbContext.ShoppingCartItems.Remove(cartItem);
             _dbContext.SaveChanges();
         }
 
@@ -79,18 +77,13 @@ namespace Cryptocop.Software.API.Repositories.Implementations
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
             if(user == null) { throw new Exception("User not found"); }
 
-            var cartItem = _dbContext.ShoppingCartItems.FirstOrDefault(s => s.Id == id);
-            if(cartItem == null) { throw new Exception("Shoppingcart item not found"); }
-            if(user.ShoppingCart.Id != cartItem.ShoppingCartId) { throw new Exception("User does not have this item"); }
+            var cart = _dbContext.ShoppingCarts.FirstOrDefault(s => s.Id == id);
+            if(cart == null) { throw new Exception("Shoppingcart not found"); }
+            //if(user.ShoppingCart.Id != cart.ShoppingCartId) { throw new Exception("User does not have this item"); }
 
-            var item =  new ShoppingCartItemEntity
-            {
-                Id = cartItem.Id,
-                ShoppingCartId = user.ShoppingCart.Id,
-                ProductIdentifier = cartItem.ProductIdentifier,
-                Quantity = quantity,
-                UnitPrice = cartItem.UnitPrice
-            };
+            var item = _dbContext.ShoppingCartItems.FirstOrDefault(i => i.Id == id && i.ShoppingCartId == cart.Id);
+            item.Quantity = quantity;
+            
             _dbContext.ShoppingCartItems.Update(item);
             _dbContext.SaveChanges();
         }

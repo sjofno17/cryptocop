@@ -35,7 +35,7 @@ namespace Cryptocop.Software.API.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public IActionResult DeleteCartItem(int cartItemId)
         {
             _shoppingCartService.RemoveCartItem(User.Identity.Name, cartItemId);
@@ -43,7 +43,7 @@ namespace Cryptocop.Software.API.Controllers
         }
 
         [HttpPatch]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public IActionResult UpdateQuantity(float quantity, int id)
         {
             if(!ModelState.IsValid){ return BadRequest(); }

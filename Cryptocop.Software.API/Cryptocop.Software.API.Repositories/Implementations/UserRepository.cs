@@ -39,9 +39,9 @@ namespace Cryptocop.Software.API.Repositories.Implementations
 
             return new UserDto
             {
-                Id = user.Id,
-                FullName = user.FullName,
-                Email = user.Email,
+                Id = _dbContext.Users.FirstOrDefault(u => u.Email == inputModel.Email).Id,
+                FullName = entity.FullName,
+                Email = entity.Email,
                 TokenId = token.Id
             };
         }

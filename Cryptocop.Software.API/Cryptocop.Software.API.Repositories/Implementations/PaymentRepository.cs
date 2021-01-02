@@ -27,7 +27,8 @@ namespace Cryptocop.Software.API.Repositories.Implementations
                 CardHolderName = paymentCard.CardholderName,
                 CardNumber = paymentCard.CardNumber,
                 Month = paymentCard.Month,
-                Year = paymentCard.Year          
+                Year = paymentCard.Year,
+                UserId = user.Id          
             };
             _dbContext.PaymentCards.Add(entity);
             _dbContext.SaveChanges();

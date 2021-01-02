@@ -27,7 +27,7 @@ namespace Cryptocop.Software.API.Services.Implementations
             var responseFlat = await HttpResponseMessageExtensions.DeserializeJsonToList<CryptoCurrencyDto>(response, true);
 
             // Return a filtered list where only the available cryptocurrencies BitCoin (BTC), Ethereum (ETH), Tether (USDT) and Monero (XMR) are within the list
-            return responseFlat.Where(c => c.Symbol == "BTC" || c.Symbol == "ETH" || c.Symbol == "USDT" || c.Symbol == "XMR"); 
+            return responseFlat.Where(s => s.Symbol == "BTC" || s.Symbol == "ETH" || s.Symbol == "USDT" || s.Symbol == "XMR"); 
         }
     }
 

@@ -10,41 +10,35 @@ namespace Cryptocop.Software.API.Services.Implementations
 {
     public class QueueService : IQueueService, IDisposable
     {
+        private ConnectionFactory factory;
+        private IConnection conn;
+        private IModel channel;
         public void PublishMessage(string routingKey, object body)
         {
-            /*string jsonString = JsonConvert.SerializeObject(body);
+            factory = new ConnectionFactory() { HostName = "localhost" };
+            conn = factory.CreateConnection();
+            channel = conn.CreateModel();
 
-            var factory = new ConnectionFactory() { HostName = "localhost" };
+            // Serialize the object to JSON
+            var jsonString = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body));
 
-            using (var connection = factory.CreateConnection())
-            {
-                using (var channel = connection.CreateModel())
-                {
-                    
-                    channel.BasicPublish(
-                         exchange: "",
-                         routingKey: "hello",
+            channel.ExchangeDeclare("order", ExchangeType.Direct);
+            channel.QueueDeclare("order", false, false, false, null);
+            channel.QueueBind("order", "order", routingKey, null);
+                
+            // Publish the message using a channel created with the RabbitMQ client
+            channel.BasicPublish(
+                        exchange: "order",
+                        routingKey: routingKey,
                          basicProperties: null,
-                         body: body);
-                }
-            }*/
-            // Dispose();
-            throw new NotImplementedException();
+                         body: jsonString);
 
         }
 
         public void Dispose()
         {
-            // TODO: Dispose the connection and channel
-            // is suppose to dispose of the current channel and connection associated with the service.
-
-            //channel.Close();
-            //conn.Close();
-            throw new NotImplementedException();
+            channel.Close();
+            conn.Close();
         }
     }
 }
-/*
-• PublishMessage =>  Serialize the object to JSON
-                     Publish the message using a channel created with the RabbitMQ client
-*/

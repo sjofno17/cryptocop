@@ -39,15 +39,15 @@ namespace Cryptocop.Software.API.Repositories.Implementations
                                 OrderDate = o.OrderDate.ToString("dd.MM.yyyy"),
                                 TotalPrice = o.TotalPrice,
                                 //OrderItems = o.OrderItems.Select(oi => new OrderItemDto { /* Here things should be mapped */ }).ToList()
-                                OrderItems = _dbContext.OrderItems
-                                    .Where(oId => oId.OrderId == oId.OrderId)
+                                OrderItems = o.OrderItems
+                                    //.Where(oId => oId.OrderId == oId.OrderId)
                                     .Select(oItem => new OrderItemDto
                                     {
-                                        Id = o.OrderItems.Id,
-                                        ProductIdentifier = o.OrderItems.ProductIdentifier,
-                                        Quantity = o.OrderItems.Quantity,
-                                        UnitPrice = o.OrderItems.UnitPrice,
-                                        TotalPrice = o.OrderItems.TotalPrice
+                                        Id = oItem.Id,
+                                        ProductIdentifier = oItem.ProductIdentifier,
+                                        Quantity = oItem.Quantity,
+                                        UnitPrice = oItem.UnitPrice,
+                                        TotalPrice = oItem.TotalPrice
                                     }).ToList()
                             }).ToList();
             return orders;

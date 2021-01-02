@@ -15,13 +15,14 @@ namespace Cryptocop.Software.API.Repositories.Implementations
 
         public JwtToken CreateNewToken()
         {            
-           // *** TODO ***
-            throw new System.NotImplementedException();
+            var token = new JwtToken();
+            _dbContext.JwtTokens.Add(token);
+            _dbContext.SaveChanges();
+            return token;
         }
 
         public bool IsTokenBlacklisted(int tokenId)
         {
-            // IsTokenBlacklisted => Check to see if the token is blacklisted within the database
             var token = _dbContext.JwtTokens.FirstOrDefault(t => t.Id == tokenId);
             if(token == null) { return true; }
 
@@ -30,7 +31,6 @@ namespace Cryptocop.Software.API.Repositories.Implementations
 
         public void VoidToken(int tokenId)
         {
-            // VoidToken => Set the token to blacklisted within the database
             var token = _dbContext.JwtTokens.FirstOrDefault(t => t.Id == tokenId);
             if (token == null) { return; }
             token.Blacklisted = true;

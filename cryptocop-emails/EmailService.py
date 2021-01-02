@@ -35,19 +35,19 @@ def send_simple_message(to, subject, body):
               "subject": subject,
               "html": body})
 
-# LAGA HELLING HÉR
+
 def send_order_email(ch, method, properties, data):
     parsed_msg = json.loads(data)
 
     # email = parsed_msg['email']
     items = parsed_msg['items']
     
-    items_html = ''.join(['<tr><td>%s</td><td>%d</td><td>%d</td><td>%d</td></tr>' % (item['description'],
+    info_html = ''.join(['<tr><td>%s</td><td>%d</td><td>%d</td><td>%d</td></tr>' % (item['description'],
                                                                                      item['unitPrice'], item['quantity'],
                                                                                      int(item['quantity'])
                                                                                      * int(item['unitPrice']))
                           for item in items])
-    representation = email_template % items_html
+    representation = email_template % info_html
     send_simple_message(parsed_msg['email'], 'Successful order!', representation)
 
 channel.basic_consume(on_message_callback=send_order_email, queue=email_queue_name, auto_ack=True)

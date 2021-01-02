@@ -7,16 +7,33 @@ namespace Cryptocop.Software.API.Repositories.Contexts
     {
         public CryptocopDbContext(DbContextOptions<CryptocopDbContext> options) : base(options) { }
 
-        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
-            modelBuilder.Entity<UserEntity>()
-                .HasOne(o => o.Orders)
+            modelBuilder.Entity<AddressEntity>()
+                .HasOne(u => u.User)
+                .WithMany(a => a.Addresses);
+
+            modelBuilder.Entity<OrderEntity>()
+                .HasOne(u => u.User)
+                .WithMany(o => o.Orders);
+
+            modelBuilder.Entity<OrderItemEntity>()
+                .HasOne(o => o.Order)
                 .WithMany(i => i.OrderItems);
+
+            modelBuilder.Entity<PaymentCardEntity>()
+                .HasOne(u => u.User)
+                .WithMany(c => c.Cards);
+
+            modelBuilder.Entity<ShoppingCartEntity>()
+                .HasOne(s => s.User)
+                .WithOne(i => i.ShoppingCart);
                 
-            modelBuilder.Entity<UserEntity>()
+            modelBuilder.Entity<ShoppingCartItemEntity>()
                 .HasOne(s => s.ShoppingCart)
                 .WithMany(i => i.ShoppingCartItems);
-        }*/
+        }
+        
         public DbSet<JwtToken> JwtTokens { get; set; }
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<AddressEntity> Addresses { get; set; }

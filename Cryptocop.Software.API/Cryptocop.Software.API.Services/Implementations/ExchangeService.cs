@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using System;
 using Cryptocop.Software.API.Models;
 using Cryptocop.Software.API.Services.Helpers;
 using Cryptocop.Software.API.Services.Interfaces;
@@ -26,10 +27,10 @@ namespace Cryptocop.Software.API.Services.Implementations
             // Create an envelope and add the list to the envelope and return that
             /*var envelope = new Envelope<ExchangeDto> 
             {
-                ?? = new List<ExchangeDto>(responseFlat);
+                Items = new List<ExchangeDto>(responseFlat);
 
-            };
-            return envelope;*/
+            };*/
+            //return envelope;    
             return null;
         }
     }
